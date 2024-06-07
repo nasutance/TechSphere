@@ -1,0 +1,94 @@
+/* Assurez-vous que le body et le html n'ont pas de marges ou de paddings par défaut */
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+/* Styles pour le conteneur de contenu */
+.content-container {
+    display: flex; /* Utilisation du modèle flexbox pour la mise en page */
+    flex-direction: row; /* Les éléments enfants sont disposés en ligne */
+    justify-content: center; /* Centre les éléments horizontalement */
+}
+
+/* Styles pour le contenu du post */
+.post-content {
+    flex: 0 1 65%; /* Prend 65% de la largeur, ne s'étire pas et ne se rétrécit pas */
+    margin-right: 20px; /* Espace à droite */
+}
+
+.post-content .lead {
+    font-size: 24px; /* Taille du texte pour le lead */
+    font-weight: bold; /* Gras pour le lead */
+    color: white; /* Couleur du texte */
+}
+
+.post-content p {
+    font-size: 18px; /* Taille du texte */
+    color: white; /* Couleur du texte */
+}
+
+/* Styles pour la section des commentaires */
+.comments-section {
+    flex: 0 1 30%; /* Prend 30% de la largeur, ne s'étire pas et ne se rétrécit pas */
+    padding: 20px; /* Espacement interne */
+    background-color: pink; /* Couleur de fond des commentaires */
+    opacity: 0.7; /* Opacité pour une légère transparence */
+    border-radius: 10px; /* Bords arrondis */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Ombre légère */
+}
+
+.comments-section h4 {
+    font-size: 24px; /* Taille du titre des commentaires */
+    color: Black; /* Couleur du titre des commentaires */
+}
+
+.comment {
+    margin-bottom: 15px; /* Espace entre les commentaires */
+}
+
+.comment p {
+    font-size: 16px; /* Taille du texte des commentaires */
+    color: Black; /* Couleur du texte des commentaires */
+}
+
+.comment span {
+    font-size: 14px; /* Taille du texte de l'auteur */
+    color: #aaaaaa; /* Couleur du texte de l'auteur */
+}
+/* Modale de connexion */
+.modal {
+    display: none; /* Cache la modale par défaut */
+    position: fixed; /* Positionne la modale de façon fixe par rapport à la fenêtre */
+    z-index: 3; /* Assure que la modale est au-dessus de tout le reste */
+    left: 0; /* Positionne la modale à gauche de la fenêtre */
+    top: 0; /* Positionne la modale en haut de la fenêtre */
+    width: 100%; /* Prend toute la largeur de la fenêtre */
+    height: 100%; /* Prend toute la hauteur de la fenêtre */
+    overflow: auto; /* Ajoute une barre de défilement si le contenu dépasse la fenêtre */
+    background-color: rgba(0,0,0,0.4); /* Définit une couleur de fond noire semi-transparente */
+}
+
+.modal-content {
+    background-color: rgba(0,0,0,0.0); /* Définit une couleur de fond blanche */
+    margin: 15% auto; /* Centre la modale verticalement avec une marge en haut */
+    padding: 10px; /* Ajoute un espace intérieur autour du contenu */
+    width: 80%; /* Définit la largeur de la modale */
+    max-width: 400px; /* Définit une largeur maximale pour la modale */
+    border-radius: 10px; /* Ajoute des coins arrondis */
+}
+
+.close {
+    color: #aaa; /* Définit la couleur du texte en gris clair */
+    float: none; /* Aligne le bouton de fermeture à droite */
+    font-size: 28px; /* Définit la taille de la police */
+    font-weight: bold; /* Définit le poids de la police en gras */
+}
+
+.close:hover,
+.close:focus {
+    color: black; /* Change la couleur du texte en noir au survol ou au focus */
+    text-decoration: none; /* Supprime toute décoration de texte */
+    cursor: pointer; /* Change le curseur en pointeur pour indiquer que c'est cliquable */
+}

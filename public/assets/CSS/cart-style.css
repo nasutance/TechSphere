@@ -1,0 +1,52 @@
+/* assets/css/cart-style.css */
+
+/* Conteneur principal pour le panier */
+.cart-container {
+    max-width: 800px; /* Largeur maximale du conteneur */
+    margin: 0 auto; /* Centrer le conteneur horizontalement */
+    padding: 20px; /* Espacement interne */
+    background-color: #f9f9f9; /* Couleur de fond du conteneur */
+    border-radius: 10px; /* Coins arrondis */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Ombre portée subtile */
+}
+
+/* Styles pour les tables dans le conteneur du panier */
+.cart-container table {
+    width: 100%; /* Table à pleine largeur */
+    border-collapse: collapse; /* Supprime l'espacement entre les cellules */
+    margin-bottom: 20px; /* Marge inférieure */
+}
+
+/* Styles pour les cellules de la table du panier */
+.cart-container th, .cart-container td {
+    padding: 10px; /* Espacement interne des cellules */
+    border: 1px solid #ccc; /* Bordure des cellules */
+    text-align: left; /* Texte aligné à gauche */
+}
+
+/* Styles pour les en-têtes des tables */
+.cart-container th {
+    background-color: #f2f2f2; /* Couleur de fond des en-têtes */
+}
+
+/* Styles pour les boutons dans le conteneur du panier */
+.cart-container button {
+    padding: 5px 10px; /* Espacement interne des boutons */
+    background-color: #007bff; /* Couleur de fond des boutons */
+    color: white; /* Couleur du texte des boutons */
+    border: none; /* Pas de bordure */
+    border-radius: 5px; /* Coins arrondis */
+    cursor: pointer; /* Curseur en forme de pointeur */
+}
+
+/* Styles pour les boutons au survol */
+.cart-container button:hover {
+    background-color: #0056b3; /* Couleur de fond des boutons au survol */
+}
+
+/* Styles pour la section du total */
+.cart-container .total {
+    text-align: right; /* Texte aligné à droite */
+    font-size: 1.2em; /* Taille de police plus grande */
+    margin-top: 10px; /* Marge supérieure */
+}

@@ -1,0 +1,97 @@
+/* Section de bienvenue */
+#welcome {
+    text-align: justify; /* Centre le texte horizontalement */
+    position: relative; /* Nécessaire pour que z-index fonctionne */
+    color: black; /* Définit la couleur du texte en noir */
+    background-color: transparent; /* Assure que le fond est transparent */
+    margin-top: 0; /* Supprime toute marge en haut */
+    padding-top: 0; /* Supprime tout padding en haut */
+}
+
+.welcome-text {
+    color: black; /* Définit la couleur du texte en noir */
+    font-size: 1.5em; /* Définit la taille de la police pour une meilleure visibilité */
+    margin: 10px 0; /* Ajoute des marges en haut et en bas */
+    background-color: transparent; /* Assure que le fond est transparent */
+}
+
+/* Container de services */
+.services-container {
+    display: flex; /* Utilise un modèle de flexbox pour la mise en page */
+    flex-wrap: wrap; /* Permet aux éléments de se répartir sur plusieurs lignes */
+    justify-content: center; /* Centre les éléments horizontalement */
+    padding: 10px; /* Ajoute un espace intérieur autour du contenu */
+    gap: 10px; /* Ajoute un espace entre les éléments */
+    z-index: 1; /* Placer en-dessous de la section de bienvenue */
+    background-color: rgba(250, 250, 250, 0.0); /* Ajoute une couleur de fond claire pour distinguer des autres sections */
+    margin-top: 0; /* Supprime toute marge en haut */
+}
+
+/* Titre des containers de services */
+.services-container h2 {
+    width: 100%; /* Prend toute la largeur disponible */
+    text-align: center; /* Centre le texte horizontalement */
+    margin-bottom: 1px; /* Ajoute une marge inférieure */
+    color: black; /* Définit la couleur du texte en noir */
+}
+
+/* Boîte de service individuelle */
+.service-box {
+    background-color: rgba(0, 0, 0, 0.5); /* Définit une couleur de fond noire semi-transparente */
+    color: white; /* Définit la couleur du texte en blanc */
+    padding: 10px; /* Ajoute un espace intérieur autour du contenu */
+    margin: 10px; /* Ajoute une marge autour de la boîte */
+    border-radius: 10px; /* Ajoute des coins arrondis */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Ajoute une ombre légère pour donner de la profondeur */
+    width: 45%; /* Définit la largeur pour deux boîtes par ligne */
+    min-width: 300px; /* Définit une largeur minimale pour éviter que les boîtes soient trop petites */
+    text-align: center; /* Centre le texte horizontalement */
+}
+
+/* Liens dans les boîtes de service */
+.service-box a {
+    color: #ccc; /* Définit la couleur du texte en blanc */
+    font-weight: bold; /* Met le texte en gras pour plus de visibilité */
+    text-decoration: underline; /* Ajoute une ligne de soulignement pour les différencier */
+}
+
+.service-box a:hover {
+    color: red; /* Change la couleur du texte en gris clair au survol */
+}
+
+
+/* Modale de connexion */
+.modal {
+    display: none; /* Cache la modale par défaut */
+    position: fixed; /* Positionne la modale de façon fixe par rapport à la fenêtre */
+    z-index: 3; /* Assure que la modale est au-dessus de tout le reste */
+    left: 0; /* Positionne la modale à gauche de la fenêtre */
+    top: 0; /* Positionne la modale en haut de la fenêtre */
+    width: 100%; /* Prend toute la largeur de la fenêtre */
+    height: 100%; /* Prend toute la hauteur de la fenêtre */
+    overflow: auto; /* Ajoute une barre de défilement si le contenu dépasse la fenêtre */
+    background-color: rgba(0,0,0,0.4); /* Définit une couleur de fond noire semi-transparente */
+}
+
+.modal-content {
+    background-color: rgba(0,0,0,0.0); /* Définit une couleur de fond blanche */
+    margin: 15% auto; /* Centre la modale verticalement avec une marge en haut */
+    padding: 10px; /* Ajoute un espace intérieur autour du contenu */
+    width: 80%; /* Définit la largeur de la modale */
+    max-width: 400px; /* Définit une largeur maximale pour la modale */
+    border-radius: 10px; /* Ajoute des coins arrondis */
+}
+
+.close {
+    color: #aaa; /* Définit la couleur du texte en gris clair */
+    float: none; /* Aligne le bouton de fermeture à droite */
+    font-size: 28px; /* Définit la taille de la police */
+    font-weight: bold; /* Définit le poids de la police en gras */
+}
+
+.close:hover,
+.close:focus {
+    color: black; /* Change la couleur du texte en noir au survol ou au focus */
+    text-decoration: none; /* Supprime toute décoration de texte */
+    cursor: pointer; /* Change le curseur en pointeur pour indiquer que c'est cliquable */
+}

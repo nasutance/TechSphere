@@ -1,0 +1,100 @@
+/* fichier register-style.css */
+/* Style pour le formulaire d'inscription */
+
+#register {
+  background-color: #f2f2f2; /* Couleur de fond pour le formulaire */
+  opacity: 0.8; /* Opacité pour un effet de transparence */
+  padding: 30px; /* Espacement intérieur du formulaire */
+  border-radius: 10px; /* Bords arrondis du formulaire */
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Ombre légère autour du formulaire */
+  max-width: 450px; /* Largeur maximale du formulaire */
+  width: 100%; /* Prend toute la largeur disponible */
+}
+
+#register h2 {
+  text-align: center; /* Centre le texte du titre */
+  margin-bottom: 10px; /* Réduit la marge inférieure */
+}
+
+#register form {
+  display: flex; /* Utilise Flexbox pour la mise en page du formulaire */
+  flex-direction: column; /* Aligne les éléments en colonne */
+}
+
+#register label {
+  font-weight: bold; /* Texte en gras pour les labels */
+  margin-bottom: 5px; /* Réduit la marge inférieure */
+  font-size: 0.9em; /* Réduit la taille de la police */
+}
+
+#register input[type="text"],
+#register input[type="password"],
+#register input[type="email"],
+#register input[type="date"],
+#register input[type="file"] {
+  padding: 8px; /* Réduit le padding des champs de saisie */
+  margin-bottom: 10px; /* Réduit la marge inférieure */
+  border-radius: 5px; /* Bords arrondis pour les champs de saisie */
+  border: 1px solid #ccc; /* Bordure grise des champs de saisie */
+  font-size: 0.9em; /* Réduit la taille de la police */
+}
+
+#register button[type="submit"] {
+  padding: 10px; /* Espacement intérieur du bouton */
+  border: none; /* Supprime la bordure du bouton */
+  background-color: #007bff; /* Couleur de fond du bouton */
+  color: #fff; /* Couleur du texte du bouton */
+  border-radius: 5px; /* Bords arrondis pour le bouton */
+  cursor: pointer; /* Change le curseur au survol */
+  transition: background-color 0.3s ease; /* Transition douce pour la couleur de fond */
+  font-size: 1em; /* Garde une taille de police normale pour le bouton */
+}
+
+#register button[type="submit"]:hover {
+  background-color: #0056b3; /* Change la couleur de fond au survol */
+}
+
+#register p {
+  margin-top: 10px; /* Réduit la marge supérieure */
+  text-align: center; /* Centre le texte du paragraphe */
+}
+
+#register p a {
+  color: #007bff; /* Couleur des liens */
+  text-decoration: none; /* Supprime le soulignement des liens */
+}
+
+#register p a:hover {
+  text-decoration: underline; /* Ajoute un soulignement au survol des liens */
+}
+
+/* Styles pour les messages */
+.message-container {
+  position: fixed; /* Positionne le conteneur des messages de manière fixe */
+  top: 10px; /* Distance du haut de la page */
+  left: 50%; /* Centre horizontalement */
+  transform: translateX(-50%); /* Ajuste le centrage horizontal */
+  z-index: 1000; /* Assure que le conteneur est au-dessus des autres éléments */
+  width: 80%; /* Prend 80% de la largeur de la page */
+  max-width: 600px; /* Largeur maximale du conteneur */
+  text-align: center; /* Centre le texte des messages */
+}
+
+.alert {
+  background-color: rgba(255, 255, 255, 0.9); /* Couleur de fond avec transparence */
+  color: black; /* Couleur du texte des messages d'alerte */
+  font-weight: bold; /* Texte en gras pour les messages d'alerte */
+  padding: 10px; /* Espacement intérieur des messages d'alerte */
+  border-radius: 5px; /* Bords arrondis des messages d'alerte */
+  margin-bottom: 10px; /* Espace en bas des messages d'alerte */
+}
+
+/* Styles pour les champs alignés côte à côte */
+.inline-fields {
+  display: flex; /* Utilise Flexbox pour aligner les champs côte à côte */
+  justify-content: space-between; /* Espace entre les champs */
+}
+
+.inline-fields > div {
+  width: 48%; /* Chaque champ prend 48% de la largeur disponible */
+}

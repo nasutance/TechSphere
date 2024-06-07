@@ -1,0 +1,93 @@
+:root {
+    --main-bg-color: rgba(0, 0, 0, 0.5);
+    --header-bg-color: rgba(255, 255, 255, 0.2);
+    --even-row-bg-color: rgba(255, 255, 255, 0.1);
+    --text-color: white;
+    --border-color: #ddd;
+    --btn-warning-bg: #ffc107;
+    --btn-secondary-bg: #6c757d;
+    --btn-danger-bg: #dc3545;
+    --btn-success-bg: #28a745;
+}
+
+/* Conteneur principal pour la section admin */
+.admin-container,
+#comments-section {
+    max-width: 2000px;
+    margin: 0 auto;
+    padding: 10px;
+    background-color: var(--main-bg-color);
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    color: var(--text-color);
+}
+
+.admin-container h2,
+#comments-section h2 {
+    text-align: center;
+    color: var(--text-color);
+}
+
+.admin-container table,
+#comments-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.admin-container table thead tr {
+    background-color: var(--header-bg-color);
+}
+
+.admin-container table th,
+.admin-container table td,
+#comments-table th,
+#comments-table td {
+    padding: 10px;
+    border: 1px solid var(--border-color);
+    text-align: center;
+    color: var(--text-color);
+}
+
+.admin-container table th.actions,
+.admin-container table td.actions {
+    width: 200px;
+}
+
+.admin-container table tbody tr:nth-child(even),
+#comments-table tbody tr:nth-child(even) {
+    background-color: var(--even-row-bg-color);
+}
+
+.profile-image {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* Styles pour les boutons */
+.btn {
+    padding: 5px 10px;
+    border-radius: 5px;
+    text-decoration: none;
+    color: var(--text-color);
+    margin-right: 10px;
+    display: inline-block;
+}
+
+.btn-warning {
+    background-color: var(--btn-warning-bg);
+}
+
+.btn-secondary {
+    background-color: var(--btn-secondary-bg);
+}
+
+.btn-danger {
+    background-color: var(--btn-danger-bg);
+}
+
+.btn-success {
+    background-color: var(--btn-success-bg);
+}

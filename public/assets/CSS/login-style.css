@@ -1,0 +1,100 @@
+/* fichier login-style.css */
+
+/* Style pour le formulaire de connexion */
+#login {
+  background-color: #e6d9e3; /* Couleur de fond pour le formulaire */
+  padding: 20px; /* Espacement interne */
+  border-radius: 20px; /* Coins arrondis */
+  box-shadow: 0 20px 50px rgba(0,0,0,0.4); /* Ombre portée */
+  max-width: 400px; /* Largeur maximale du formulaire */
+  width: 100%; /* Largeur à 100% */
+}
+
+#login h2 {
+  text-align: center; /* Centre le texte */
+  margin-bottom: 20px; /* Marge inférieure */
+}
+
+#login form {
+  display: flex; /* Utilisation du modèle flexbox */
+  flex-direction: column; /* Disposition des éléments en colonne */
+  border-radius: 50px; /* Coins arrondis */
+}
+
+#login label {
+  font-weight: bold; /* Texte en gras pour les labels */
+}
+
+#login input[type="text"],
+#login input[type="password"] {
+  padding: 10px; /* Espacement interne */
+  margin-bottom: 15px; /* Marge inférieure */
+  border-radius: 5px; /* Coins arrondis */
+  border: 1px solid #ccc; /* Bordure */
+}
+
+#login button[type="submit"] {
+  padding: 10px; /* Espacement interne */
+  border: none; /* Pas de bordure */
+  background-color: #007bff; /* Couleur de fond */
+  color: #fff; /* Couleur du texte */
+  border-radius: 5px; /* Coins arrondis */
+  cursor: pointer; /* Curseur en forme de pointeur */
+  transition: background-color 0.3s ease; /* Transition pour la couleur de fond */
+}
+
+#login button[type="submit"]:hover {
+  background-color: #0056b3; /* Couleur de fond au survol */
+}
+
+#login p {
+  margin-top: 15px; /* Marge supérieure */
+  text-align: center; /* Centre le texte */
+  color: black; /* Couleur du texte */
+}
+
+#login p a {
+  color: #007bff; /* Couleur des liens */
+  text-decoration: none; /* Supprime la décoration des liens */
+}
+
+#login p a:hover {
+  text-decoration: underline; /* Souligne les liens au survol */
+}
+
+/* Styles pour les messages */
+.message-container {
+  position: fixed; /* Position fixe */
+  top: 10px; /* Position en haut */
+  left: 50%; /* Centre horizontalement */
+  transform: translateX(-50%); /* Centre horizontalement */
+  z-index: 1000; /* Assure que le conteneur est au-dessus de tout le reste */
+  width: 80%; /* Largeur à 80% */
+  max-width: 600px; /* Largeur maximale */
+  text-align: center; /* Centre le texte */
+}
+
+.alert {
+  background-color: rgba(255, 255, 255, 0.9); /* Couleur de fond blanche avec transparence */
+  color: black; /* Couleur du texte */
+  font-weight: bold; /* Texte en gras */
+  padding: 10px; /* Espacement interne */
+  border-radius: 5px; /* Coins arrondis */
+  margin-bottom: 10px; /* Marge inférieure */
+}
+
+/* Nouveau style pour centrer le conteneur */
+.center-container {
+  display: flex; /* Utilisation du modèle flexbox */
+  flex-direction: column; /* Disposition des éléments en colonne */
+  align-items: center; /* Centre les éléments horizontalement */
+  justify-content: center; /* Centre les éléments verticalement */
+  height: calc(100vh - 90px); /* Hauteur totale moins la hauteur du header */
+}
+
+#welcome p {
+  color: white; /* Couleur du texte */
+  font-size: 1.2em; /* Taille de la police */
+  margin-bottom: 20px; /* Marge inférieure */
+  text-align: center; /* Centre le texte */
+}

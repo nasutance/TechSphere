@@ -1,0 +1,88 @@
+/* Ajoute une marge supérieure pour éviter le chevauchement avec le header */
+.container {
+    display: flex; /* Utilise Flexbox pour la mise en page */
+    flex-wrap: wrap; /* Permet aux éléments de passer à la ligne suivante */
+    justify-content: space-between; /* Espace entre les colonnes */
+}
+
+.search-bar {
+    display: flex; /* Utilise Flexbox pour la mise en page de la barre de recherche */
+    justify-content: center; /* Centre la barre de recherche horizontalement */
+    width: 100%; /* Prend toute la largeur disponible */
+    margin-bottom: 20px; /* Espace entre la barre de recherche et les posts */
+}
+
+.search-bar form {
+    display: flex; /* Utilise Flexbox pour la mise en page du formulaire */
+    width: 100%; /* Prend toute la largeur disponible */
+    max-width: 800px; /* Largeur maximale de la barre de recherche */
+}
+
+.search-bar input[type="text"] {
+    padding: 10px; /* Espacement intérieur du champ de texte */
+    font-size: 16px; /* Taille de la police */
+    border: 1px solid #ccc; /* Bordure du champ de texte */
+    border-radius: 5px 0 0 5px; /* Bords arrondis sur les côtés gauche */
+    outline: none; /* Supprime le contour par défaut */
+    flex-grow: 1; /* Prend l'espace disponible */
+}
+
+.search-bar button {
+    padding: 10px 20px; /* Espacement intérieur du bouton */
+    font-size: 16px; /* Taille de la police */
+    border: 1px solid #ccc; /* Bordure du bouton */
+    border-left: none; /* Supprime la bordure gauche */
+    border-radius: 0 5px 5px 0; /* Bords arrondis sur les côtés droit */
+    background-color: #6fb98f; /* Couleur de fond */
+    color: white; /* Couleur du texte */
+    cursor: pointer; /* Change le curseur lors du survol */
+}
+
+.search-bar button:hover {
+    background-color: #5a9b7f; /* Couleur de fond au survol */
+}
+
+.posts-grid {
+    display: flex; /* Utilise Flexbox pour la mise en page des posts */
+    flex-wrap: wrap; /* Permet aux éléments de passer à la ligne suivante */
+    justify-content: space-between; /* Espace entre les colonnes */
+}
+
+.article {
+    flex: 0 1 calc(33.333% - 20px); /* Chaque article prend environ 1/3 de la largeur, avec de l'espace entre */
+    margin-bottom: 20px; /* Ajoute un espace en bas de chaque article */
+    background-color: rgba(200, 200, 200, 0.8); /* Couleur de fond avec transparence */
+    padding: 20px; /* Espacement intérieur des articles */
+    border-radius: 10px; /* Bords arrondis pour les articles */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Ombre légère pour les articles */
+}
+
+.article h2 {
+    font-size: 24px; /* Taille de la police pour les titres des articles */
+    color: blue; /* Couleur du texte des titres */
+}
+
+.article p {
+    font-size: 16px; /* Taille de la police pour le contenu des articles */
+    color: #666; /* Couleur du texte du contenu */
+}
+
+.article span {
+    display: block; /* Affiche la date de publication en bloc */
+    margin-top: 10px; /* Espacement en haut de la date de publication */
+    font-size: 14px; /* Taille de la police pour la date de publication */
+    color: #999; /* Couleur du texte pour la date de publication */
+}
+
+/* Assurez une mise en page réactive */
+@media (max-width: 1200px) {
+    .article {
+        flex: 0 1 calc(50% - 20px); /* Deux colonnes sur les écrans moyens */
+    }
+}
+
+@media (max-width: 768px) {
+    .article {
+        flex: 0 1 calc(100% - 20px); /* Une seule colonne sur les petits écrans */
+    }
+}

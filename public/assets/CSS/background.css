@@ -1,0 +1,28 @@
+:root {
+    --background-image-url: url('../img/background.jpeg');
+    --header-footer-padding: 1rem 0;
+    --transparent-bg: rgba(255, 255, 255, 0.0);
+}
+
+/* Styles pour le corps de la page */
+body {
+    background-image: var(--background-image-url);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+/* Styles pour l'en-tête */
+header, footer {
+    width: 100%;
+    text-align: center;
+    padding: var(--header-footer-padding);
+    background: var(--transparent-bg);
+}
+
+/* Styles pour l'espace vide */
+.empty-space {
+    width: 100%;
+    height: 100px;
+    background: transparent;
+}
