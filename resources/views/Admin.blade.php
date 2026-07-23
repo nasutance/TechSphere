@@ -1,15 +1,6 @@
 <x-layouts.base :title="'Admin Dashboard'">
-    <link rel="stylesheet" href="{{ asset('assets/css/Admin.css') }}">
-    <style>
-        footer {
-            clear: both;
-            width: 100%;
-            text-align: center;
-            padding: 1rem 0;
-            background: rgba(255, 255, 255, 0.0);
-            position: relative;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ asset('assets/css/admin.css') }}">
+
     <div class="admin-container">
         <h2>Liste des utilisateurs</h2>
         @if (session('success'))
@@ -44,7 +35,7 @@
                         <td>{{ $user->date_de_naissance }}</td>
                         <td>
                             @if($user->profile_image)
-                                <img src="{{ asset($user->profile_image) }}" alt="Profile Image" class="profile-image">
+                                <img src="{{ $user->profile_image_url }}" alt="Photo de profil" class="profile-image">
                             @endif
                         </td>
                         <td>{{ $user->role }}</td>
@@ -81,9 +72,7 @@
                         <th>Post</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <!-- Les commentaires seront ajoutés ici via JavaScript -->
-                </tbody>
+                <tbody></tbody>
             </table>
         </div>
 
@@ -100,10 +89,10 @@
                         <tr>
                             <td>
                                 <a href="{{ route('blog.show', $comment->post_id) }}#comment-{{ $comment->comment_id }}">
-                                    "{{ $comment->post_title }}"
+                                    "{{ $comment->post?->title }}"
                                 </a>
                             </td>
-                            <td>{{ $comment->author_name }}</td>
+                            <td>{{ $comment->user?->username }}</td>
                         </tr>
                     @empty
                         <tr>
@@ -124,16 +113,21 @@
                     commentsTableBody.innerHTML = '';
                     comments.forEach(comment => {
                         const row = document.createElement('tr');
-                        row.innerHTML = `
-                            <td>${comment.content}</td>
-                            <td>${new Date(comment.created_at).toLocaleDateString()}</td>
-                            <td>${comment.post_title}</td>
-                        `;
+                        const values = [
+                            comment.content,
+                            new Date(comment.created_at).toLocaleDateString(),
+                            comment.post_title,
+                        ];
+                        values.forEach(value => {
+                            const cell = document.createElement('td');
+                            cell.textContent = value ?? '';
+                            row.appendChild(cell);
+                        });
                         commentsTableBody.appendChild(row);
                     });
                     document.getElementById('comments-section').style.display = 'block';
                 })
-                .catch(error => console.error('Error:', error));
+                .catch(error => console.error('Erreur :', error));
         }
     </script>
 </x-layouts.base>
