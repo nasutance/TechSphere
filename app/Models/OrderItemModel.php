@@ -1,30 +1,25 @@
 <?php
 
-namespace App\Models; // Espace de noms pour le modèle
+namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory; // Importation du trait HasFactory pour les usines de modèles
-use Illuminate\Database\Eloquent\Model; // Importation de la classe de base Model
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class OrderItemModel extends Model // Déclaration de la classe OrderItemModel qui étend Model
+class OrderItemModel extends Model
 {
-    use HasFactory; // Utilisation du trait HasFactory pour permettre l'utilisation d'usines pour ce modèle
-    protected $table = 'order_items'; // Définition de la table associée à ce modèle
-    protected $primaryKey = 'order_item_id'; // Définition de la clé primaire de la table
-    public $timestamps = false; // Désactivation des timestamps (created_at et updated_at)
+    protected $table = 'order_items';
+    protected $primaryKey = 'order_item_id';
+    protected $fillable = ['order_id', 'item_id', 'quantity', 'price'];
 
-    protected $fillable = ['order_id', 'item_id', 'quantity', 'price']; // Définition des attributs pouvant être assignés en masse
+    public $timestamps = false;
 
-    // Définition de la relation entre OrderItemModel et ItemModel
-    public function item()
+    public function item(): BelongsTo
     {
-        // Un article de commande appartient à un article (relation many-to-one)
         return $this->belongsTo(ItemModel::class, 'item_id');
     }
 
-    // Définition de la relation entre OrderItemModel et OrderModel
-    public function order()
+    public function order(): BelongsTo
     {
-        // Un article de commande appartient à une commande (relation many-to-one)
         return $this->belongsTo(OrderModel::class, 'order_id');
     }
 }
