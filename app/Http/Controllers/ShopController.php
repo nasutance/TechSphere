@@ -2,206 +2,189 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\CategoryModel;
 use App\Models\ItemModel;
-use App\Models\OrderModel;
 use App\Models\OrderItemModel;
+use App\Models\OrderModel;
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class ShopController extends Controller
 {
-    // Méthode pour afficher la page d'accueil du magasin
+    // Page d'accueil de la boutique : catalogue par catégorie et panier
     public function index()
     {
-        // Récupère toutes les catégories avec leurs articles
         $categories = CategoryModel::with('items')->get();
+        $cartItems = $this->cartItems();
 
-        // Récupère le contenu du panier depuis la session
-        $cart = session()->get('cart', []);
-        $cartItems = collect($cart)->map(function ($item, $id) {
-            return (object) [
-                'item_id' => $id,
-                'name' => $item['name'],
-                'quantity' => $item['quantity'],
-                'price' => $item['price'],
-            ];
-        });
+        $total = $cartItems->sum(fn ($item) => $item->price * $item->quantity);
 
-        // Calcule le total du panier
-        $total = $cartItems->sum(function ($item) {
-            return $item->price * $item->quantity;
-        });
-
-        // Récupère tous les articles pour la liste déroulante
         $items = ItemModel::all();
 
-        // Retourne la vue 'shop.index' avec les données nécessaires
         return view('shop.index', compact('categories', 'cartItems', 'total', 'items'));
     }
 
-    // Méthode pour mettre à jour la quantité d'un article dans le panier
+    // Ajoute ou retire une quantité d'un article dans le panier (stocké en session)
     public function updateCartItem(Request $request, $itemId)
     {
-        // Récupère le contenu du panier depuis la session
+        $validated = $request->validate([
+            'quantity' => 'required|integer|between:-10,10',
+        ]);
+
         $cart = session()->get('cart', []);
-        $item = ItemModel::findOrFail($itemId); // Trouve l'article par son ID
-        $change = $request->input('quantity'); // Quantité à ajouter ou retirer
+        $item = ItemModel::findOrFail($itemId);
+        $change = (int) $validated['quantity'];
 
         if (isset($cart[$itemId])) {
             $cart[$itemId]['quantity'] += $change;
             if ($cart[$itemId]['quantity'] > 10) {
                 $cart[$itemId]['quantity'] = 10;
+                session()->put('cart', $cart);
+
                 return redirect()->back()->with('error', 'Vous ne pouvez pas ajouter plus de 10 fois cet article.');
             } elseif ($cart[$itemId]['quantity'] < 1) {
-                unset($cart[$itemId]); // Retire l'article du panier si la quantité est inférieure à 1
+                unset($cart[$itemId]);
             }
-        } else {
-            if ($change > 0) {
-                $cart[$itemId] = [
-                    'name' => $item->name,
-                    'price' => $item->price,
-                    'quantity' => $change
-                ];
-            }
+        } elseif ($change > 0) {
+            $cart[$itemId] = [
+                'name' => $item->name,
+                'price' => $item->price,
+                'quantity' => $change,
+            ];
         }
 
-        session()->put('cart', $cart); // Met à jour le panier dans la session
+        session()->put('cart', $cart);
 
+        // N'accepte qu'une redirection interne au site
         $redirect = $request->input('redirect', route('shop.cart'));
+        if (! str_starts_with($redirect, url('/'))) {
+            $redirect = route('shop.cart');
+        }
+
         return redirect($redirect)->with('success', 'Panier mis à jour.');
     }
 
-    // Méthode pour vider le panier
+    // Vide le panier
     public function clearCart()
     {
-        session()->forget('cart'); // Supprime le panier de la session
+        session()->forget('cart');
+
         return redirect()->back()->with('success', 'Le panier a été vidé.');
     }
 
-    // Méthode pour afficher le contenu du panier
+    // Affiche le contenu du panier
     public function cart()
     {
-        // Récupère le contenu du panier depuis la session
-        $cart = session()->get('cart', []);
-        $cartItems = collect($cart)->map(function ($item, $id) {
-            return (object) [
-                'item_id' => $id,
-                'name' => $item['name'],
-                'quantity' => $item['quantity'],
-                'price' => $item['price'],
-            ];
-        });
+        $cartItems = $this->cartItems();
+        $total = $cartItems->sum(fn ($item) => $item->price * $item->quantity);
 
-        // Calcule le total du panier
-        $total = $cartItems->sum(function ($item) {
-            return $item->price * $item->quantity;
-        });
-
-        // Retourne la vue 'shop.cart' avec les données nécessaires
-        return view('shop.cart', compact('cartItems', 'total'));
+        return view('shop.cart-page', compact('cartItems', 'total'));
     }
 
-    // Méthode pour passer à la caisse
+    // Transforme le panier en commande
     public function checkout()
     {
-        // Récupère le contenu du panier depuis la session
         $cart = session()->get('cart', []);
 
         if (empty($cart)) {
-            return redirect()->route('shop.index')->with('error', 'Votre panier est vide!');
+            return redirect()->route('shop.index')->with('error', 'Votre panier est vide !');
         }
 
-        // Calcule le total du panier
-        $total = array_reduce($cart, function ($carry, $item) {
-            return $carry + ($item['price'] * $item['quantity']);
-        }, 0);
+        $total = array_reduce($cart, fn ($carry, $item) => $carry + ($item['price'] * $item['quantity']), 0);
 
-        // Crée la commande
-        $order = OrderModel::create([
-            'user_id' => Auth::id(),
-            'total' => $total
-        ]);
-
-        // Ajoute chaque article de la commande
-        foreach ($cart as $itemId => $item) {
-            OrderItemModel::create([
-                'order_id' => $order->order_id,
-                'item_id' => $itemId,
-                'quantity' => $item['quantity'],
-                'price' => $item['price']
+        // La commande et ses lignes sont créées dans une même transaction
+        $order = DB::transaction(function () use ($cart, $total) {
+            $order = OrderModel::create([
+                'user_id' => Auth::id(),
+                'total' => $total,
             ]);
-        }
 
-        session()->forget('cart'); // Vide le panier
+            foreach ($cart as $itemId => $item) {
+                OrderItemModel::create([
+                    'order_id' => $order->order_id,
+                    'item_id' => $itemId,
+                    'quantity' => $item['quantity'],
+                    'price' => $item['price'],
+                ]);
+            }
 
-        return redirect()->route('shop.order', ['orderId' => $order->order_id])->with('success', 'Paiement effectué avec succès!');
+            return $order;
+        });
+
+        session()->forget('cart');
+
+        return redirect()->route('shop.order', ['orderId' => $order->order_id])->with('success', 'Paiement effectué avec succès !');
     }
 
-    // Méthode pour afficher les détails d'une commande
+    // Détail d'une commande (accessible à son propriétaire ou à un admin)
     public function showOrder($orderId)
     {
-        // Trouve la commande par son ID avec les articles associés
         $order = OrderModel::with('items.item')->findOrFail($orderId);
-        // Retourne la vue 'shop.order' avec les détails de la commande
+
+        abort_unless($order->user_id === Auth::id() || Auth::user()->isAdmin(), 403);
+
         return view('shop.order', compact('order'));
     }
 
-    // Méthode pour afficher toutes les commandes de l'utilisateur connecté
+    // Historique des commandes de l'utilisateur connecté
     public function orders()
     {
-        // Récupère toutes les commandes de l'utilisateur connecté avec les articles associés
-        $orders = OrderModel::where('user_id', Auth::id())->with('items.item')->get();
-        // Retourne la vue 'shop.order' avec les commandes
+        $orders = OrderModel::where('user_id', Auth::id())
+            ->with('items.item')
+            ->latest()
+            ->get();
+
         return view('shop.order', compact('orders'));
     }
 
-    // Méthode pour ajouter un nouvel article
+    // Ajoute un article au catalogue (admin)
     public function addItem(Request $request)
     {
-        // Validation des données du formulaire
-        $request->validate([
+        $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'price' => 'required|numeric',
+            'price' => 'required|numeric|min:0',
             'category_id' => 'required|exists:categories,category_id',
         ]);
 
-        // Crée un nouvel article avec les données validées
-        ItemModel::create([
-            'name' => $request->name,
-            'price' => $request->price,
-            'category_id' => $request->category_id,
-        ]);
+        ItemModel::create($validated);
 
-        // Redirige vers la page d'accueil du magasin avec un message de succès
         return redirect()->route('shop.index')->with('success', 'Article ajouté avec succès.');
     }
 
-    // Méthode pour supprimer un article
+    // Supprime un article du catalogue (admin)
     public function deleteItem(Request $request)
     {
-        // Validation des données du formulaire
         $request->validate([
             'item_id' => 'required|exists:items,item_id',
         ]);
 
-        // Trouve l'article par son ID et le supprime
         ItemModel::findOrFail($request->item_id)->delete();
 
-        // Redirige vers la page d'accueil du magasin avec un message de succès
         return redirect()->route('shop.index')->with('success', 'Article supprimé avec succès.');
     }
 
-    // Méthode pour afficher les commandes d'un utilisateur spécifique
+    // Commandes d'un utilisateur donné (admin)
     public function userOrders($userId)
     {
-        // Trouve l'utilisateur par son ID
         $user = User::findOrFail($userId);
-        // Récupère toutes les commandes de l'utilisateur avec les articles associés
-        $orders = OrderModel::where('user_id', $user->user_id)->with('items.item')->get();
+        $orders = OrderModel::where('user_id', $user->user_id)
+            ->with('items.item')
+            ->latest()
+            ->get();
 
-        // Retourne la vue 'shop.order' avec les commandes et les informations de l'utilisateur
         return view('shop.order', compact('orders', 'user'));
+    }
+
+    // Reconstruit les lignes du panier à partir de la session
+    private function cartItems()
+    {
+        return collect(session()->get('cart', []))->map(fn ($item, $id) => (object) [
+            'item_id' => $id,
+            'name' => $item['name'],
+            'quantity' => $item['quantity'],
+            'price' => $item['price'],
+        ]);
     }
 }
