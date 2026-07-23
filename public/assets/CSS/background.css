@@ -26,3 +26,9 @@ header, footer {
     height: 100px;
     background: transparent;
 }
+
+/* Texte par défaut en blanc, lisible sur le fond sombre */
+p {
+    color: white;
+    clear: both;
+}

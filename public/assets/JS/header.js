@@ -1,50 +1,31 @@
-$(document).ready(function() { // Attendre que le document soit prêt
+// Réduit le header et adapte le logo lors du défilement de la page
+document.addEventListener('DOMContentLoaded', function () {
+    const header = document.querySelector('header');
+    const logo = document.querySelector('header .logo');
+    const navList = document.querySelector('header nav ul');
 
-  $(window).scroll(function() { // Fonction qui se déclenche lors du défilement de la fenêtre
-
-    var scroll = $(this).scrollTop(), // Récupère la position verticale du défilement
-      header = $("header"), // Sélectionne l'élément header
-      detay = $(".detay"); // Sélectionne l'élément avec la classe .detay
-
-    if (scroll > 90) { // Si le défilement est supérieur à 90 pixels
-      header.css({
-        "height": "60px", // Réduit la hauteur du header
-        "background": "#f5f7fa" // Change le fond du header
-      });
-
-      $(".logo").css({
-        "line-height": "60px", // Change la hauteur de la ligne pour centrer verticalement le logo
-        "color": "black" // Change la couleur du texte du logo
-      });
-
-      detay.css({
-        "position": "fixed", // Fixe la position de .detay
-        "top": "8px", // Positionne .detay à 8 pixels du haut
-        "left": "calc(100vw - (850px)/2)", // Centre .detay horizontalement
-        "background": "none", // Supprime le fond de .detay
-        "border": "none" // Supprime la bordure de .detay
-      });
-
-      $("ul").slideUp(); // Masque les éléments <ul> avec une animation de glissement vers le haut
-    } else { // Si le défilement est inférieur ou égal à 90 pixels
-      header.css({
-        "height": "90px", // Augmente la hauteur du header
-        "background": "#021c1e" // Change le fond du header
-      });
-
-      $(".logo").css({
-        "line-height": "90px", // Change la hauteur de la ligne pour centrer verticalement le logo
-        "color": "#6fb98f" // Change la couleur du texte du logo
-      });
-
-      detay.css({
-        "position": "inherit", // Réinitialise la position de .detay
-        "background": "#f5f7fa", // Change le fond de .detay
-        "border": "1px solid #aaa" // Ajoute une bordure à .detay
-      });
-
-      $("ul").slideDown(); // Affiche les éléments <ul> avec une animation de glissement vers le bas
+    if (!header || !logo) {
+        return;
     }
-  });
 
+    window.addEventListener('scroll', function () {
+        if (window.scrollY > 90) {
+            header.style.height = '60px';
+            header.style.background = '#f5f7fa';
+            logo.style.lineHeight = '60px';
+            logo.style.color = 'black';
+            if (navList) {
+                navList.style.lineHeight = '60px';
+            }
+        } else {
+            // Retour aux valeurs définies dans la feuille de style
+            header.style.height = '';
+            header.style.background = '';
+            logo.style.lineHeight = '';
+            logo.style.color = '';
+            if (navList) {
+                navList.style.lineHeight = '';
+            }
+        }
+    });
 });
