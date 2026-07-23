@@ -8,17 +8,16 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('messages', function (Blueprint $table) {
+        // Historique des connexions, utilisé par les statistiques du tableau de bord admin
+        Schema::create('logins', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users', 'user_id')->cascadeOnDelete();
-            $table->string('username');
-            $table->text('message');
-            $table->timestamps();
+            $table->dateTime('date');
         });
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('messages');
+        Schema::dropIfExists('logins');
     }
 };
